@@ -1,0 +1,83 @@
+.walletForm{
+  background: #f0f0f0;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  width: 100%;
+  max-width: 680px;
+
+  .formContainer{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+
+    .inputsWrapper{
+      width: 100%;
+      display: flex;
+      gap: 16px;
+
+      .singleInputWrapper{
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        width: 100%;
+
+        &:last-child{
+          flex: 1;
+        }
+
+        > label{
+          font-size: 10px;
+          font-weight: 600;
+        }
+
+        .input{
+          border: 1px solid #000;
+          border-radius: 4px;
+          padding: 4px 8px;
+          font-size: 14px;
+          outline: none;
+          box-shadow: none;
+
+          &:active,
+          &:focus {
+            background: #f0f0f0;
+          }
+
+          &::placeholder {
+            color: #969393;
+            font-style: italic;
+            font-size: 12px;
+          }
+        }
+
+        .inputErr{
+          font-size: 8px;
+          color: #e14949;
+          margin-left: 8px;
+        }
+      }
+    }
+
+    .button{
+      width: 100%;
+      max-width: fit-content;
+      padding: 6px 12px;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+
+      &:hover{
+        background: #f0f0f0;
+      }
+
+      &:disabled{
+        background: #e0e0e0;
+        pointer-events: none;
+      }
+    }
+  }
+}

@@ -1,0 +1,107 @@
+.addressData{
+  width: 100%;
+  background: #fff;
+  padding: 24px;
+  border-radius: 8px;
+  border: 1px solid #0c0c0c;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+
+  .header{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 24px;
+
+    h3{
+      font-size: 18px;
+    }
+
+    h4{
+      color: rgb(86, 85, 85);
+      font-size: 14px;
+    }
+  }
+
+  .dataBody{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    .emptyState{
+      background: #3f3e3e;
+      width: fit-content;
+      padding: 4px 8px;
+      border-radius: 4px;
+      color: #fff;
+      align-self: center;
+    }
+
+    .singleTx{
+      background: #f0f0f0;
+      padding: 8px;
+      border-radius: 4px;
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      border: 1px solid #000;
+
+      .left{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        border-right: 1px solid #0c0c0c;
+
+        .txDirectionChip{
+          width: max-content;
+          padding: 4px;
+          border-radius: 4px;
+          font-size: 8px;
+          color: #fff;
+          border: 1px solid #fff;
+          background: #ccc;
+
+          &.OUT{
+            background: red;
+          }
+
+          &.IN{
+            background: green;
+          }
+        }
+      }
+
+      .right{
+        padding-right: 8px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: flex-end;
+        gap: 4px;
+        width: 100%;
+      }
+
+      .date{
+        font-style: italic;
+        font-size: 12px;
+      }
+    }
+
+
+
+    .OUT{
+      border-color: #a20b0b;
+      background: rgba(162, 11, 11, 0.1);
+    }
+
+    .IN{
+      border-color: #0b9a39;
+      background: rgba(11, 154, 57, 0.1)
+    }
+  }
+}
