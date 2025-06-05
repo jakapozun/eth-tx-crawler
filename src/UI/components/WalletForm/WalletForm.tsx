@@ -1,6 +1,6 @@
 import classes from './WalletForm.module.scss';
 import { type SubmitHandler, useForm } from 'react-hook-form';
-import { useLocation, useNavigate, useParams } from 'react-router';
+import { useNavigate } from 'react-router';
 
 interface WalletFormData {
   address: string;
