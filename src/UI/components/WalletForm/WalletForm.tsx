@@ -1,5 +1,6 @@
 import classes from './WalletForm.module.scss';
 import { type SubmitHandler, useForm } from 'react-hook-form';
+import { useLocation, useNavigate, useParams } from 'react-router';
 
 interface WalletFormData {
   address: string;
@@ -12,9 +13,12 @@ const defaultValues: WalletFormData = {
 };
 
 const WalletForm = () => {
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isValid },
   } = useForm({
     mode: 'onChange',
@@ -22,7 +26,11 @@ const WalletForm = () => {
   });
 
   const onGetDataHandler: SubmitHandler<WalletFormData> = (formData) => {
-    console.log(formData);
+    if (!formData.address || !formData.blockNumber) return;
+    navigate(
+      `?address=${formData.address}&blockNumber=${formData.blockNumber}`
+    );
+    reset();
   };
 
   return (
