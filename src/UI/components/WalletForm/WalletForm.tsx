@@ -86,7 +86,7 @@ const WalletForm = () => {
           </div>
         </div>
         <button className={classes.button} disabled={!isValid}>
-          Get Address data
+          Get Address Data
         </button>
         <button
           type={'button'}

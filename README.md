@@ -1,54 +1,62 @@
-# React + TypeScript + Vite
+# ETH Transaction Crawler
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a simple web application that allows you to fetch transactions for a given ERC-20 address on the ETH blockchain.
+The data is displayed in some sort of table with data cards and includes pagination at the top.
 
-Currently, two official plugins are available:
+**Quick Start:**
+- Clone the repository
+- Run `npm install` to install dependencies
+- Run `npm run dev` to start the development server
+- Open your browser and navigate to `http://localhost:5173`
+- You can also view the app on your mobile by navigating to `http://192.168.1.68:5173/` - CHECK IN TERMINAL WHEN RUNNING DEV
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+**Guide (features):**
+- Enter a **valid ERC-20 address** in the input field and **block number**(starting block) in the second input field.
+- Click **"Get Address Data"** - click **"Reset Params"** to reset the inputs and clear URL params.
+- Below you will see the transactions displayed as data cards (10 results). You can navigate between the pages.
+- Each card contains: 
+  - TX direction - IN / OUT
+  - Block number
+  - From / To address
+  - ETH value
+  - Tx Fee
+  - Date
+- In the header above transactions container, you can see the BALANCE component on the right side. 
+  - It shows the current balance of the address for ETH and some predefined ERC-20 tokens (TRAC, USDC, USDT).
+  - Changing the date input will fetch the balances for that date.
+  - ETH also shows the value in USD (using CoinGecko API).
+- Application is responsive so feel free to check it on your mobile device.
+- Run `npm run test` to run the unit tests (two unit tests).
 
-## Expanding the ESLint configuration
+**Tech Stack:**
+- React
+- Vite - for fast development and build
+- TypeScript - for type safety
+- SCSS (sass) - for styling
+- TanStack Query (React Query) - for data fetching, caching and management
+- Ethers.js - for interacting with the Ethereum blockchain and data validation
+- React Router - for routing
+- Axios - for HTTP requests
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+**Project Structure:**
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+- `main.tsx` - entry point of the application
+- `index.scss` - global styles
+- `vite.config.ts` - Vite configuration file
+- `src/` - contains all the source code
+  - `UI/components` - reusable components
+  - `api/` - api hooks and fetching functions, models
+  - `utils/` - utility functions, constants
+  - `test/` - unit tests
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## ⚠️ IMPORTANT
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+This project uses **Etherscan API** endpoints for fetching transactions and block by time.
+It also uses **Infura** for fetching address balances.
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+So, it's important for you to set up API keys and add them to the `.env` file in the root directory of the project.
+Create a `.env` file based on the `.env.example` file provided in the root directory.
+
+
+**I'm happy to provide you with my TEST API keys if you don't have them, just let me know in the email (jaka.pozun2@gmail.com).**
+
