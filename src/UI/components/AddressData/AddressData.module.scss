@@ -11,20 +11,28 @@
 
   .header{
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
     border-bottom: 1px solid #ccc;
     padding-bottom: 24px;
+    display: flex;
+    gap: 24px;
+    justify-content: space-between;
 
-    h3{
-      font-size: 18px;
+    .inputsDataContainer{
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+
+      h3{
+        font-size: 18px;
+      }
+
+      h4{
+        color: rgb(86, 85, 85);
+        font-size: 14px;
+      }
     }
 
-    h4{
-      color: rgb(86, 85, 85);
-      font-size: 14px;
-    }
+
   }
 
   .dataBody{

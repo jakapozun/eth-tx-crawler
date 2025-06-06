@@ -38,3 +38,15 @@ export const convertDateToUtcTimestamp = (date: string): string => {
   const utcDateMidnight = new Date(`${date}T00:00:00Z`);
   return Math.floor(utcDateMidnight.getTime() / 1000).toString();
 };
+
+export const displayEthInUsd = (ethPrice: string, ethValue: string) => {
+  if (!ethPrice || !ethValue) return '';
+
+  const ethPriceNumber = parseFloat(ethPrice);
+  const ethValueNumber = parseFloat(ethValue);
+
+  if (isNaN(ethPriceNumber) || isNaN(ethValueNumber)) return '';
+
+  const usdValue = ethPriceNumber * ethValueNumber;
+  return usdValue.toFixed(2);
+};

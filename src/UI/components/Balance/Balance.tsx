@@ -1,7 +1,13 @@
 import { type ChangeEvent, useState } from 'react';
 import classes from './Balance.module.scss';
-import { useEthBalanceAtBlock } from '../../../api/hooks/useAddressBalance.ts';
-import { convertDateToUtcTimestamp } from '../../../utils/helpers.ts';
+import {
+  useEthBalanceAtBlock,
+  useEthPrice,
+} from '../../../api/hooks/useAddressBalance.ts';
+import {
+  convertDateToUtcTimestamp,
+  displayEthInUsd,
+} from '../../../utils/helpers.ts';
 const newDate = new Date();
 
 interface BalanceProps {
@@ -11,7 +17,9 @@ interface BalanceProps {
 const Balance = ({ address }: BalanceProps) => {
   const [date, setDate] = useState<string>(newDate.toISOString().split('T')[0]);
 
-  const { data, isLoading } = useEthBalanceAtBlock({
+  const { data: currentEthPrice } = useEthPrice();
+
+  const { data: tokenBalancesList, isLoading } = useEthBalanceAtBlock({
     address,
     timestamp: convertDateToUtcTimestamp(date) as string,
   });
@@ -22,18 +30,34 @@ const Balance = ({ address }: BalanceProps) => {
 
   return (
     <div className={classes.balance}>
-      <span>ETH Balance at</span>
-      <input
-        className={classes.dateInput}
-        type={'date'}
-        value={date}
-        onChange={(e) => onDateChangeHandler(e)}
-      />
-      {isLoading ? (
-        <div className={classes.smallerLoader} />
-      ) : (
-        date && <span className={classes.ethValue}>: {data} ETH</span>
-      )}
+      <div className={classes.titleContainer}>
+        <span>Token balances as of </span>
+        <input
+          className={classes.dateInput}
+          type={'date'}
+          value={date}
+          onChange={(e) => onDateChangeHandler(e)}
+        />
+      </div>
+      <div className={classes.tokenList}>
+        {isLoading ? (
+          <div className={classes.smallerLoader} />
+        ) : (
+          tokenBalancesList?.map((token) => (
+            <div className={classes.singleTokenInfo} key={token.label}>
+              <p className={classes.label}>{token.label}</p>
+              <p>
+                {token.value}
+                {token.label === 'ETH' && (
+                  <span className={classes.usdValue}>
+                    (${displayEthInUsd(currentEthPrice, token.value)})
+                  </span>
+                )}
+              </p>
+            </div>
+          ))
+        )}
+      </div>
     </div>
   );
 };

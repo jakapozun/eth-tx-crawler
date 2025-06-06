@@ -44,3 +44,9 @@ export interface GetTransactionsResponse {
   message: string;
   result: Transaction[];
 }
+
+export interface TokenContract {
+  label: string;
+  address: string;
+  decimals?: number;
+}

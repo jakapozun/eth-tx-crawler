@@ -35,8 +35,10 @@ const AddressData = () => {
   return (
     <section className={classes.addressData}>
       <div className={classes.header}>
-        <h3>{params?.get('address')}</h3>
-        <h4>Starting Block Number: {params?.get('blockNumber')}</h4>
+        <div className={classes.inputsDataContainer}>
+          <h3>{params?.get('address')}</h3>
+          <h4>Starting Block Number: {params?.get('blockNumber')}</h4>
+        </div>
         <Balance address={params?.get('address') || ''} />
       </div>
 
