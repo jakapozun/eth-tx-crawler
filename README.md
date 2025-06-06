@@ -1,7 +1,7 @@
 # ETH Transaction Crawler
 
 This is a simple web application that allows you to fetch transactions for a given ERC-20 address on the ETH blockchain.
-The data is displayed in some sort of table with data cards and includes pagination at the top.
+The data is displayed in some sort of table with data cards and includes pagination at the top. The design isn't the best, but I focused on showing important data, functionality and performance.
 
 **Quick Start:**
 - Clone the repository
