@@ -34,7 +34,7 @@ The data is displayed in some sort of table with data cards and includes paginat
 - TypeScript - for type safety
 - SCSS (sass) - for styling
 - TanStack Query (React Query) - for data fetching, caching and management
-- Ethers.js - for interacting with the Ethereum blockchain and data validation
+- Ethers(v6) - for interacting with the Ethereum blockchain and data validation
 - React Router - for routing
 - Axios - for HTTP requests
 
