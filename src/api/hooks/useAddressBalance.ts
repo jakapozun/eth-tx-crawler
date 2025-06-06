@@ -45,10 +45,13 @@ const getAddressBalanceAtBlock = async (
 
   try {
     //get eth balance
-    const ethBalanceOfAddress = await provider.getBalance(
-      address,
-      BigInt(blockNumber)
-    );
+    const ethBalanceOfAddress = await provider
+      .getBalance(address, BigInt(blockNumber))
+      .then((res) => res)
+      .catch((e) => {
+        console.error('Error fetching ETH balance:', e);
+        return 0;
+      });
 
     //get other tokens balance
     for (const token of TOKEN_CONTRACTS) {

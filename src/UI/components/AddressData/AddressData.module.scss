@@ -1,3 +1,5 @@
+@use '/src/mixins' as *;
+
 .addressData{
   width: 100%;
   background: #fff;
@@ -16,6 +18,11 @@
     display: flex;
     gap: 24px;
     justify-content: space-between;
+
+    @include mq("sm"){
+      flex-direction: column;
+      word-wrap: break-word;
+    }
 
     .inputsDataContainer{
       display: flex;
@@ -40,6 +47,42 @@
     flex-direction: column;
     gap: 8px;
 
+    .pagination{
+      display: flex;
+      gap: 4px;
+      align-self: flex-end;
+
+      > button{
+        font-family: "Inter", sans-serif;
+        font-weight: 600;
+        font-size: 12px;
+        background: #fff;
+        border: 1px solid #000;
+        border-radius: 4px;
+        color: #1e1d1d;
+
+        &:hover{
+          cursor: pointer;
+          background: #000;
+          color: #fff
+        }
+
+        &:disabled{
+          pointer-events: none;
+          background: #d2d2d2;
+          border: none;
+        }
+      }
+
+      .pNumber{
+        font-size: 12px;
+        background: #000;
+        color: #fff;
+        padding: 4px 8px;
+        border-radius: 4px;
+      }
+    }
+
     .emptyState{
       background: #3f3e3e;
       width: fit-content;
@@ -58,12 +101,22 @@
       gap: 8px;
       border: 1px solid #000;
 
+      @include mq("sm"){
+        gap: 4px;
+        flex-direction: column;
+        word-break: break-word;
+      }
+
       .left{
         width: 100%;
         display: flex;
         flex-direction: column;
         gap: 4px;
         border-right: 1px solid #0c0c0c;
+
+        @include mq("sm"){
+          border-right: none;
+        }
 
         .txDirectionChip{
           width: max-content;
@@ -92,6 +145,10 @@
         align-items: flex-end;
         gap: 4px;
         width: 100%;
+
+        @include mq("sm"){
+          align-items: flex-start;
+        }
       }
 
       .date{

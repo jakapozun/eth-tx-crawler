@@ -1,6 +1,7 @@
 export interface GetTransactionsRequest {
   address: string;
   startBlock: string;
+  page?: number;
 }
 
 export interface GetBalance {

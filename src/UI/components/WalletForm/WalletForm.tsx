@@ -1,6 +1,8 @@
 import classes from './WalletForm.module.scss';
 import { type SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
+import classNames from 'classnames';
+import { isAddress } from 'ethers';
 
 interface WalletFormData {
   address: string;
@@ -28,9 +30,14 @@ const WalletForm = () => {
   const onGetDataHandler: SubmitHandler<WalletFormData> = (formData) => {
     if (!formData.address || !formData.blockNumber) return;
     navigate(
-      `?address=${formData.address}&blockNumber=${formData.blockNumber}`
+      `?address=${formData.address}&blockNumber=${formData.blockNumber}&page=1`
     );
     reset();
+  };
+
+  const onClearParamsHandler = () => {
+    reset();
+    navigate('/');
   };
 
   return (
@@ -43,7 +50,14 @@ const WalletForm = () => {
           <div className={classes.singleInputWrapper}>
             <label htmlFor={'address'}>Wallet Address</label>
             <input
-              {...register('address', { required: 'Address is required' })}
+              {...register('address', {
+                required: 'Address is required',
+                validate: (value) => {
+                  if (!isAddress(value)) {
+                    return 'Invalid address format';
+                  }
+                },
+              })}
               type="text"
               placeholder="0x..."
               className={classes.input}
@@ -59,20 +73,27 @@ const WalletForm = () => {
             <label htmlFor="blockNumber">Block Number</label>
             <input
               {...register('blockNumber', { required: ' is required' })}
-              type="text"
+              type="number"
               placeholder="9000000"
               className={classes.input}
               id="blockNumber"
             />
-            {errors?.address && (
+            {errors?.blockNumber && (
               <span className={classes.inputErr}>
-                {errors.address?.message}
+                {errors.blockNumber?.message}
               </span>
             )}
           </div>
         </div>
         <button className={classes.button} disabled={!isValid}>
           Get Address data
+        </button>
+        <button
+          type={'button'}
+          className={classNames(classes.button, classes.clearSearch)}
+          onClick={onClearParamsHandler}
+        >
+          Reset Params
         </button>
       </form>
     </section>

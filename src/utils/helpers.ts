@@ -28,6 +28,14 @@ export const formatTimestampToUtc = (timestamp: string): string => {
 };
 
 export const formatTxFee = (gasPrice: string, gasUsed: string): string => {
+  if (
+    !gasPrice ||
+    !gasUsed ||
+    isNaN(Number(gasPrice)) ||
+    isNaN(Number(gasUsed))
+  )
+    return 'Invalid Fee';
+
   const fee = BigInt(gasPrice) * BigInt(gasUsed);
   return formatEther(fee.toString());
 };
@@ -36,6 +44,9 @@ export const convertDateToUtcTimestamp = (date: string): string => {
   if (!date) return '';
 
   const utcDateMidnight = new Date(`${date}T00:00:00Z`);
+
+  if (isNaN(utcDateMidnight.getTime())) return '';
+
   return Math.floor(utcDateMidnight.getTime() / 1000).toString();
 };
 

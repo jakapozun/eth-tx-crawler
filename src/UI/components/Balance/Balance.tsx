@@ -14,8 +14,10 @@ interface BalanceProps {
   address: string;
 }
 
+const currentDate = newDate.toISOString().split('T')[0];
+
 const Balance = ({ address }: BalanceProps) => {
-  const [date, setDate] = useState<string>(newDate.toISOString().split('T')[0]);
+  const [date, setDate] = useState<string>(currentDate);
 
   const { data: currentEthPrice } = useEthPrice();
 
@@ -25,6 +27,7 @@ const Balance = ({ address }: BalanceProps) => {
   });
 
   const onDateChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value > currentDate) return;
     setDate(e.target.value);
   };
 
@@ -37,6 +40,7 @@ const Balance = ({ address }: BalanceProps) => {
           type={'date'}
           value={date}
           onChange={(e) => onDateChangeHandler(e)}
+          max={currentDate}
         />
       </div>
       <div className={classes.tokenList}>
