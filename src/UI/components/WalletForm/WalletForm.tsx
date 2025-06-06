@@ -1,6 +1,7 @@
 import classes from './WalletForm.module.scss';
 import { type SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
+import classNames from 'classnames';
 
 interface WalletFormData {
   address: string;
@@ -31,6 +32,11 @@ const WalletForm = () => {
       `?address=${formData.address}&blockNumber=${formData.blockNumber}&page=1`
     );
     reset();
+  };
+
+  const onClearParamsHandler = () => {
+    reset();
+    navigate('/');
   };
 
   return (
@@ -73,6 +79,13 @@ const WalletForm = () => {
         </div>
         <button className={classes.button} disabled={!isValid}>
           Get Address data
+        </button>
+        <button
+          type={'button'}
+          className={classNames(classes.button, classes.clearSearch)}
+          onClick={onClearParamsHandler}
+        >
+          Reset Params
         </button>
       </form>
     </section>
