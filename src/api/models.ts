@@ -3,6 +3,11 @@ export interface GetTransactionsRequest {
   startBlock: string;
 }
 
+export interface GetBalance {
+  address: string;
+  timestamp: string;
+}
+
 export const defaultEtherscanParamsReq = {
   module: 'account',
   action: 'txlist',
@@ -38,4 +43,10 @@ export interface GetTransactionsResponse {
   status: string;
   message: string;
   result: Transaction[];
+}
+
+export interface TokenContract {
+  label: string;
+  address: string;
+  decimals?: number;
 }

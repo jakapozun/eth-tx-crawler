@@ -7,16 +7,17 @@ import classNames from 'classnames';
 import {
   formatTimestampToUtc,
   formatTxFee,
-  formatWeiToEth,
   getTransactionDirection,
 } from '../../../utils/helpers.ts';
 import { useMemo } from 'react';
+import Balance from '../Balance/Balance.tsx';
+import { formatEther } from 'ethers';
+import FromToLabel from '../FromToLabel/FromToLabel.tsx';
 
 const AddressData = () => {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
 
-  console.log(params);
   const { data, isLoading, isFetching } = useEthTransactions();
 
   const transactions = useMemo(() => {
@@ -27,28 +28,6 @@ const AddressData = () => {
     return <Loader />;
   }
 
-  const displayFromToLabel = (from: string, to: string) => {
-    const value = getTransactionDirection(
-      params?.get('address') as string,
-      from,
-      to
-    );
-
-    if (value === 'IN') {
-      return (
-        <span>
-          <strong>From:</strong> {from}
-        </span>
-      );
-    } else if (value === 'OUT') {
-      return (
-        <span>
-          <strong>To:</strong> {to}
-        </span>
-      );
-    }
-  };
-
   if (params.size < 1) {
     return null;
   }
@@ -56,8 +35,11 @@ const AddressData = () => {
   return (
     <section className={classes.addressData}>
       <div className={classes.header}>
-        <h3>{params?.get('address')}</h3>
-        <h4>Starting Block Number: {params?.get('blockNumber')}</h4>
+        <div className={classes.inputsDataContainer}>
+          <h3>{params?.get('address')}</h3>
+          <h4>Starting Block Number: {params?.get('blockNumber')}</h4>
+        </div>
+        <Balance address={params?.get('address') || ''} />
       </div>
 
       <div className={classes.dataBody}>
@@ -90,7 +72,7 @@ const AddressData = () => {
                   )}
                 >
                   {getTransactionDirection(
-                    params?.get('address') as string,
+                    (params?.get('address') as string) || '',
                     item.from,
                     item.to
                   )}
@@ -98,11 +80,15 @@ const AddressData = () => {
                 <span>
                   <strong>Block:</strong> {item.blockNumber}
                 </span>
-                {displayFromToLabel(item.from, item.to)}
+                <FromToLabel
+                  from={item.from}
+                  to={item.to}
+                  address={params?.get('address') || ''}
+                />
               </div>
               <div className={classes.right}>
                 <span>
-                  <strong>Value:</strong> {formatWeiToEth(item.value)} ETH
+                  <strong>Value:</strong> {formatEther(item.value)} ETH
                 </span>
                 <span>
                   <strong>Tx Fee:</strong>{' '}
