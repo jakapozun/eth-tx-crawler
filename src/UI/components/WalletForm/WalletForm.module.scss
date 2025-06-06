@@ -1,3 +1,5 @@
+@use '/src/mixins' as *;
+
 .walletForm{
   background: #f0f0f0;
   padding: 16px;
@@ -13,10 +15,18 @@
     gap: 12px;
     align-items: center;
 
+    @include mq("sm"){
+      align-items: flex-start;
+    }
+
     .inputsWrapper{
       width: 100%;
       display: flex;
       gap: 16px;
+
+      @include mq("sm"){
+        flex-direction: column;
+      }
 
       .singleInputWrapper{
         display: flex;

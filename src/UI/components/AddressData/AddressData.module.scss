@@ -1,3 +1,5 @@
+@use '/src/mixins' as *;
+
 .addressData{
   width: 100%;
   background: #fff;
@@ -16,6 +18,11 @@
     display: flex;
     gap: 24px;
     justify-content: space-between;
+
+    @include mq("sm"){
+      flex-direction: column;
+      word-wrap: break-word;
+    }
 
     .inputsDataContainer{
       display: flex;
@@ -94,12 +101,22 @@
       gap: 8px;
       border: 1px solid #000;
 
+      @include mq("sm"){
+        gap: 4px;
+        flex-direction: column;
+        word-break: break-word;
+      }
+
       .left{
         width: 100%;
         display: flex;
         flex-direction: column;
         gap: 4px;
         border-right: 1px solid #0c0c0c;
+
+        @include mq("sm"){
+          border-right: none;
+        }
 
         .txDirectionChip{
           width: max-content;
@@ -128,6 +145,10 @@
         align-items: flex-end;
         gap: 4px;
         width: 100%;
+
+        @include mq("sm"){
+          align-items: flex-start;
+        }
       }
 
       .date{

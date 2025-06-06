@@ -1,8 +1,14 @@
+@use '/src/mixins' as *;
+
 .balance{
   display: flex;
   gap: 6px;
   align-items: center;
   flex-direction: column;
+
+  @include mq("sm"){
+    align-items: flex-start;
+  }
 
   .titleContainer{
     display: flex;
