@@ -6,7 +6,7 @@ import {
 } from '../models.ts';
 import axios, { type AxiosResponse, AxiosError } from 'axios';
 import { ETHERSCAN_BASE_URL } from '../../utils/constants.ts';
-import { useLocation } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 
 const getEthTransactions = async ({
   address,
@@ -35,6 +35,7 @@ const getEthTransactions = async ({
 export const useEthTransactions = () => {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
+  const navigate = useNavigate();
 
   const address = params.get('address') || '';
   const blockNumber = params.get('blockNumber') || '';
@@ -42,12 +43,19 @@ export const useEthTransactions = () => {
 
   return useQuery({
     queryKey: ['ethTransactions', address, blockNumber, page],
-    queryFn: () =>
-      getEthTransactions({
+    queryFn: async () => {
+      const res = await getEthTransactions({
         address,
         startBlock: blockNumber,
         page,
-      }),
+      });
+
+      if (res?.status !== '1') {
+        navigate('/');
+      }
+
+      return res;
+    },
     enabled: !!params.get('address') && !!params.get('blockNumber'),
     staleTime: 1000 * 60 * 5,
   });
