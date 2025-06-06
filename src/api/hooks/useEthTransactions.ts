@@ -16,7 +16,7 @@ const getEthTransactions = async ({
     const res = (await axios(ETHERSCAN_BASE_URL, {
       params: {
         ...defaultEtherscanParamsReq,
-        address: address,
+        address,
         startblock: startBlock,
       },
     })) as AxiosResponse<GetTransactionsResponse>;

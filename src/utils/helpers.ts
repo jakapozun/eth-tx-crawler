@@ -1,4 +1,5 @@
 import { formatInTimeZone } from 'date-fns-tz';
+import { formatEther } from 'ethers';
 
 export type TxDirection = 'IN' | 'OUT' | 'OTHER';
 
@@ -26,16 +27,14 @@ export const formatTimestampToUtc = (timestamp: string): string => {
   return '';
 };
 
-export const formatWeiToEth = (wei: string): string => {
-  const weiValue = BigInt(wei);
-  const ethValue = weiValue / BigInt(10 ** 18);
-  const remainder = weiValue % BigInt(10 ** 18);
-
-  const decimal = remainder.toString().padStart(18, '0').replace(/0+$/, '');
-  return decimal ? `${ethValue}.${decimal}` : ethValue.toString();
-};
-
 export const formatTxFee = (gasPrice: string, gasUsed: string): string => {
   const fee = BigInt(gasPrice) * BigInt(gasUsed);
-  return formatWeiToEth(fee.toString());
+  return formatEther(fee.toString());
+};
+
+export const convertDateToUtcTimestamp = (date: string): string => {
+  if (!date) return '';
+
+  const utcDateMidnight = new Date(`${date}T00:00:00Z`);
+  return Math.floor(utcDateMidnight.getTime() / 1000).toString();
 };
