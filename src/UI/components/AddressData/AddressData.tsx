@@ -1,8 +1,11 @@
 import { useEthTransactions } from '../../../api/hooks/useEthTransactions.ts';
-import { useLocation } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import classes from './AddressData.module.scss';
 import Loader from '../Loader/Loader.tsx';
-import type { Transaction } from '../../../api/models.ts';
+import {
+  defaultEtherscanParamsReq,
+  type Transaction,
+} from '../../../api/models.ts';
 import classNames from 'classnames';
 import {
   formatTimestampToUtc,
@@ -15,14 +18,26 @@ import { formatEther } from 'ethers';
 import FromToLabel from '../FromToLabel/FromToLabel.tsx';
 
 const AddressData = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   const params = new URLSearchParams(location.search);
+
+  const currentPage = parseInt(params.get('page') || '1', 10);
 
   const { data, isLoading, isFetching } = useEthTransactions();
 
   const transactions = useMemo(() => {
     return data?.result || [];
   }, [data?.result]);
+
+  const handlePagination = (newPage: number) => {
+    params.set('page', newPage.toString());
+    navigate(`${location.pathname}?${params.toString()}`);
+  };
+
+  const isNextDisabled = useMemo(() => {
+    return transactions?.length < defaultEtherscanParamsReq.offset;
+  }, [transactions]);
 
   if (isLoading || isFetching) {
     return <Loader />;
@@ -41,8 +56,22 @@ const AddressData = () => {
         </div>
         <Balance address={params?.get('address') || ''} />
       </div>
-
       <div className={classes.dataBody}>
+        <div className={classes.pagination}>
+          <button
+            onClick={() => handlePagination(currentPage - 1)}
+            disabled={currentPage <= 1}
+          >
+            Back
+          </button>
+          <div className={classes.pNumber}>{currentPage}</div>
+          <button
+            onClick={() => handlePagination(currentPage + 1)}
+            disabled={isNextDisabled}
+          >
+            Next
+          </button>
+        </div>
         {transactions?.length > 0 ? (
           transactions?.map((item: Transaction) => (
             <div

@@ -28,7 +28,7 @@ const WalletForm = () => {
   const onGetDataHandler: SubmitHandler<WalletFormData> = (formData) => {
     if (!formData.address || !formData.blockNumber) return;
     navigate(
-      `?address=${formData.address}&blockNumber=${formData.blockNumber}`
+      `?address=${formData.address}&blockNumber=${formData.blockNumber}&page=1`
     );
     reset();
   };

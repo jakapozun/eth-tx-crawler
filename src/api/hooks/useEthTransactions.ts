@@ -11,6 +11,7 @@ import { useLocation } from 'react-router';
 const getEthTransactions = async ({
   address,
   startBlock,
+  page,
 }: GetTransactionsRequest) => {
   try {
     const res = (await axios(ETHERSCAN_BASE_URL, {
@@ -18,6 +19,7 @@ const getEthTransactions = async ({
         ...defaultEtherscanParamsReq,
         address,
         startblock: startBlock,
+        page,
       },
     })) as AxiosResponse<GetTransactionsResponse>;
 
@@ -34,16 +36,17 @@ export const useEthTransactions = () => {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
 
+  const address = params.get('address') || '';
+  const blockNumber = params.get('blockNumber') || '';
+  const page = parseInt(params.get('page') || '1', 10);
+
   return useQuery({
-    queryKey: [
-      'ethTransactions',
-      params.get('address'),
-      params.get('blockNumber'),
-    ],
+    queryKey: ['ethTransactions', address, blockNumber, page],
     queryFn: () =>
       getEthTransactions({
-        address: params.get('address') || '',
-        startBlock: params.get('blockNumber') || '',
+        address,
+        startBlock: blockNumber,
+        page,
       }),
     enabled: !!params.get('address') && !!params.get('blockNumber'),
     staleTime: 1000 * 60 * 5,
