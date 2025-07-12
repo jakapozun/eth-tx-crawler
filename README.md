@@ -56,7 +56,3 @@ It also uses **Infura** for fetching address balances.
 
 So, it's important for you to set up API keys and add them to the `.env` file in the root directory of the project.
 Create a `.env` file based on the `.env.example` file provided in the root directory.
-
-
-**I'm happy to provide you with my TEST API keys if you don't have them, just let me know in the email (jaka.pozun2@gmail.com).**
-
